@@ -16,4 +16,7 @@ func InitializeRoutes(r *gin.Engine) {
 	locations.GET("", handlers.RenderFullLocationPageHTML)
 	locations.POST("", handlers.RenderLocationsHTML)
 
+	episodes := r.Group("episodes")
+	episodes.GET("", handlers.RenderFullEpisodePageHTML)
+	episodes.POST("", handlers.RenderEpisodesHTML)
 }
