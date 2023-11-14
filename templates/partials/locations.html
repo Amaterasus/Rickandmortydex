@@ -1,6 +1,4 @@
-<div id="locations" class="flex flex-wrap">
-    {{range .locations}}
-        {{ template "locationCard.html" .}}
-    {{end}}
-    {{ if (eq .length 20) }} <div hx-post="/locations?page={{ .nextPage }}&name={{ .name }}" hx-trigger="revealed" hx-swap="outerHTML" hx-target="this"></div> {{ end }}
-</div>
+{{range .locations}}
+    {{ template "locationCard.html" .}}
+{{end}}
+{{ if (eq .length 20) }} <div hx-post="/locations?page={{ .nextPage }}&name={{ .name }}" hx-trigger="revealed" hx-swap="outerHTML" hx-target="this"></div> {{ end }}

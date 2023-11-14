@@ -7,7 +7,9 @@
             <div class="w-full bg-blue-800 p-4 flex items-center justify-between">
                 <input hx-get="/locations" hx-push-url="true" hx-params="name" name="name" hx-trigger="input changed delay:1000ms, keyup[keyCode==13]" hx-target="#locations" type="text" value="{{ .name }}" placeholder="Search locations..." class="w-full py-2 px-3 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400">
             </div>
-            {{ template "locations.html" . }}
+            <div id="locations" class="flex flex-wrap">
+                {{ template "locations.html" . }}
+            </div>
         </div>
         {{ template "footer.html" . }}
     </body>
