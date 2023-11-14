@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+    {{ template "head.html" .}}
+    <body id="main" class="flex flex-col h-screen bg-blue-800">
+        {{ template "header.html" . }}
+        <div class="flex flex-col items-center justify-center h-screen bg-blue-800">
+            <img src="https://upload.wikimedia.org/wikipedia/vi/thumb/f/f6/Rick_and_Morty_logo.svg/1200px-Rick_and_Morty_logo.svg.png" class="max-w-md w-full h-auto rounded-lg mb-6" alt="Site Image">
+            <div class="text-white text-3xl font-semibold mb-4">Welcome to the Rick and Morty Dex</div>
+            <p class="text-white text-lg text-center">This site is not affiliated with rick and morty.</p>
+        </div>
+        {{ template "footer.html" . }}
+    </body>
+</html>

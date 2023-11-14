@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/amaterasus/Rickandmortydex/routes"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
@@ -28,6 +29,11 @@ func main() {
 	gin.SetMode(mode)
 	// Initialize the Gin router
 	r := gin.Default()
+
+	r.LoadHTMLGlob("templates/**/*.html")
+	r.Static("/assets", "./assets")
+
+	routes.InitializeRoutes(r)
 	
 	log.Println("Starting server on port", port)
 
