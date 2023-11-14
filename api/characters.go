@@ -34,8 +34,8 @@ type CharactersResponse struct {
 	Results []Character `json:"results"`
 }
 
-func GetCharacters(page string) (characters []Character, err error) {
-	url := fmt.Sprintf("https://rickandmortyapi.com/api/character?page=%v", page)
+func GetCharacters(page, name string) (characters []Character, err error) {
+	url := fmt.Sprintf("https://rickandmortyapi.com/api/character?page=%v&name=%v", page, name)
 
 	resp, err := http.Get(url)
 

@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 )
 
@@ -24,8 +23,8 @@ type EpisodesResponse struct {
 	Results []Episode `json:"results"`
 }
 
-func GetEpisodes(page string) (episodes []Episode, err error) {
-	url := fmt.Sprintf("https://rickandmortyapi.com/api/episode?page=%v", page)
+func GetEpisodes(page, name string) (episodes []Episode, err error) {
+	url := fmt.Sprintf("https://rickandmortyapi.com/api/episode?page=%v&name=%v", page, name)
 
 	resp, err := http.Get(url)
 
@@ -59,8 +58,6 @@ func GetEpisodes(page string) (episodes []Episode, err error) {
 func GetSpecifiedEpisodes(ids string) (episodes []Episode, err error) {
 	url := fmt.Sprintf("https://rickandmortyapi.com/api/episode/%v", ids)
 
-	log.Println(url)
-
 	resp, err := http.Get(url)
 
 	if err != nil {
@@ -88,8 +85,6 @@ func GetSpecifiedEpisodes(ids string) (episodes []Episode, err error) {
 
 func GetSpecifiedEpisode(id string) (episode Episode, err error) {
 	url := fmt.Sprintf("https://rickandmortyapi.com/api/episode/%v", id)
-
-	log.Println(url)
 
 	resp, err := http.Get(url)
 

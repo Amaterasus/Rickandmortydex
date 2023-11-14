@@ -11,15 +11,31 @@ import (
 
 func RenderFullLocationPageHTML(c *gin.Context) {
 
-	locations, err := api.GetLocations("1")
+	name, nameExists := c.GetQuery("name")
+
+	locations, err := api.GetLocations("1", name)
+
 
 	if err != nil {
 		c.HTML(http.StatusNotFound, "404.html", nil)
+		return
 	}
 
 	nextPage := 2
 
-	c.HTML(http.StatusOK, "location.html", gin.H{"locations": locations, "nextPage": nextPage, "length": len(locations)})
+	if c.GetHeader("HX-Request") == "true"  && nameExists {
+		log.Println("HTMX request")
+
+		if name == "" {
+			c.Header("HX-Push-Url", "/locations")
+		}
+
+		// due to my poor naming this looks identical to our other html document but it's just this is a pluralisation
+		c.HTML(http.StatusOK, "locations.html", gin.H{"locations": locations, "nextPage": nextPage, "length": len(locations), "name": name})
+		return
+	}
+
+	c.HTML(http.StatusOK, "location.html", gin.H{"locations": locations, "nextPage": nextPage, "length": len(locations), "name": name})
 }
 
 func RenderLocationsHTML(c *gin.Context) {
@@ -30,7 +46,9 @@ func RenderLocationsHTML(c *gin.Context) {
 		page = s
 	}
 
-	locations, err := api.GetLocations(page)
+	name, _ := c.GetQuery("name")
+
+	locations, err := api.GetLocations(page, name)
 
 	if err != nil {
 		c.HTML(http.StatusNotFound, "404.html", nil)
@@ -44,5 +62,5 @@ func RenderLocationsHTML(c *gin.Context) {
 
 	nextPage = nextPage + 1
 
-	c.HTML(http.StatusOK, "locations.html", gin.H{"locations": locations, "nextPage": nextPage, "length": len(locations)})
+	c.HTML(http.StatusOK, "locations.html", gin.H{"locations": locations, "nextPage": nextPage, "length": len(locations), "name": name})
 }

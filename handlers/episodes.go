@@ -11,15 +11,29 @@ import (
 
 func RenderFullEpisodePageHTML(c *gin.Context) {
 
-	episodes, err := api.GetEpisodes("1")
+	name, nameExists := c.GetQuery("name")
+
+	episodes, err := api.GetEpisodes("1", name)
+
 
 	if err != nil {
 		c.HTML(http.StatusNotFound, "404.html", nil)
+		return
 	}
 
 	nextPage := 2
 
-	c.HTML(http.StatusOK, "episode.html", gin.H{"episodes": episodes, "nextPage": nextPage, "length": len(episodes)})
+	if c.GetHeader("HX-Request") == "true"  && nameExists {
+		if name == "" {
+			c.Header("HX-Push-Url", "/episodes")
+		}
+
+		// due to my poor naming this looks identical to our other html document but it's just this is a pluralisation
+		c.HTML(http.StatusOK, "episodes.html", gin.H{"episodes": episodes, "nextPage": nextPage, "length": len(episodes), "name": name})
+		return
+	}
+
+	c.HTML(http.StatusOK, "episode.html", gin.H{"episodes": episodes, "nextPage": nextPage, "length": len(episodes), "name": name})
 }
 
 func RenderEpisodesHTML(c *gin.Context) {
@@ -30,7 +44,9 @@ func RenderEpisodesHTML(c *gin.Context) {
 		page = s
 	}
 
-	episodes, err := api.GetEpisodes(page)
+	name, _ := c.GetQuery("name")
+
+	episodes, err := api.GetEpisodes(page, name)
 
 	if err != nil {
 		c.HTML(http.StatusNotFound, "404.html", nil)
@@ -44,5 +60,5 @@ func RenderEpisodesHTML(c *gin.Context) {
 
 	nextPage = nextPage + 1
 
-	c.HTML(http.StatusOK, "episodes.html", gin.H{"episodes": episodes, "nextPage": nextPage, "length": len(episodes)})
+	c.HTML(http.StatusOK, "episodes.html", gin.H{"episodes": episodes, "nextPage": nextPage, "length": len(episodes), "name": name})
 }

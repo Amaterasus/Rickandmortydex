@@ -23,8 +23,8 @@ type LocationsResponse struct {
 	Results []Location `json:"results"`
 }
 
-func GetLocations(page string) (locations []Location, err error) {
-	url := fmt.Sprintf("https://rickandmortyapi.com/api/location?page=%v", page)
+func GetLocations(page, name string) (locations []Location, err error) {
+	url := fmt.Sprintf("https://rickandmortyapi.com/api/location?page=%v&name=%v", page, name)
 
 	resp, err := http.Get(url)
 
