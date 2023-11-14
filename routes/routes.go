@@ -11,6 +11,10 @@ func InitializeRoutes(r *gin.Engine) {
 	r.GET("/", handlers.RenderFullHomePageHTML)
 	r.NoRoute(handlers.RenderNotFoundHTML)
 
+	characters := r.Group("characters")
+	characters.GET("", handlers.RenderFullCharacterPageHTML)
+	characters.GET("/:id", handlers.RenderMainCharactersBioHTML)
+	characters.POST("", handlers.RenderCharactersHTML)
 
 	locations := r.Group("locations")
 	locations.GET("", handlers.RenderFullLocationPageHTML)

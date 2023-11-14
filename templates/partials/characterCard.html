@@ -1,0 +1,12 @@
+<div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/5 p-4" hx-get="/characters/{{ .Id }}" hx-push-url="/characters/{{ .Id }}" hx-target="#main" hx-swap="outerHTML">
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+        <img src="{{ .Image }}" alt="{{ .Name }}" class="w-full h-auto">
+        <div class="p-4">
+            <h2 class="text-xl font-semibold">{{ .Name }}</h2>
+            <p class="text-gray-600">Status: {{ .Status }}</p>
+            <p class="text-gray-600">Species: {{ .Species }}</p>
+            <p class="text-gray-600">Gender: {{ .Gender }}</p>
+            <p class="text-gray-600">Origin: {{ .Origin.Name }}</p>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,6 @@
+<div id="characters" class="flex flex-wrap">
+    {{range .characters}}
+        {{ template "characterCard.html" .}}
+    {{end}}
+</div>
+{{ if (eq .length 20) }} <div hx-post="/characters?page={{ .nextPage }}" hx-trigger="revealed" hx-swap="outerHTML" hx-target="this"> </div>{{ end }}

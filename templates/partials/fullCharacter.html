@@ -1,0 +1,27 @@
+<div class="bg-blue-500 bg-opacity-30 shadow-lg rounded-lg overflow-hidden flex">
+    <div class="p-4 flex-grow text-white">
+        <h2 class="text-xl font-semibold">{{ .character.Name }}</h2>
+        <p>Status: {{ .character.Status }}</p>
+        <p>Species: {{ .character.Species }}</p>
+        <p>Subspecies: {{ .character.Subspecies }}</p>
+        <p>Gender: {{ .character.Gender }}</p>
+        
+        <div class="mt-4">
+            <h3 class="text-lg font-semibold">Origin</h3>
+            <a href="{{ .character.Origin.Link }}">Name: {{ .character.Origin.Name }}</a>
+        </div>
+        <div class="mt-4">
+            <h3 class="text-lg font-semibold">Location</h3>
+            <a href="{{ .character.Location.Link }}">Name: {{ .character.Location.Name }}</a>
+        </div>
+        <div class="mt-4">
+            <h3 class="text-lg font-semibold">Episodes</h3>
+            <div class="flex flex-wrap">
+                {{ range .episodes }}
+                    {{ template "episodeCard.html" .}}
+                {{ end }}
+            </div>
+        </div>
+    </div>
+    <img src="{{ .character.Image }}" alt="{{ .character.Name }}" class="w-1/4 h-1/4 p-4 float-right">
+</div>
